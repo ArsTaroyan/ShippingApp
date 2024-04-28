@@ -1,4 +1,4 @@
-package com.example.shipping.domain.data.preferences
+package com.example.shipping.data.preferences
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

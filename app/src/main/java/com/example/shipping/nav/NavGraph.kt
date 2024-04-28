@@ -4,12 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.example.shipping.domain.data.preferences.Preference
+import com.example.shipping.data.preferences.Preference
 import com.example.shipping.domain.utils.Screen
-import com.example.shipping.presentation.ComeInScreen
-import com.example.shipping.presentation.MenuScreen
-import com.example.shipping.presentation.SplashScreen
+import com.example.shipping.presentation.comeinscreen.ComeInScreen
+import com.example.shipping.presentation.menuscreen.MenuScreen
+import com.example.shipping.presentation.ordersscreen.OrdersScreen
+import com.example.shipping.presentation.shippingscreen.ShippingScreen
+import com.example.shipping.presentation.splashscreen.SplashScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, preference: Preference?) {
@@ -26,13 +27,25 @@ fun NavGraph(navController: NavHostController, preference: Preference?) {
         composable(
             route = Screen.Menu.route
         ) {
-            MenuScreen(navController, preference)
+            MenuScreen(navController)
         }
 
         composable(
             route = Screen.Splash.route
         ) {
             SplashScreen(navController, preference)
+        }
+
+        composable(
+            route = Screen.Orders.route
+        ) {
+            OrdersScreen(navController)
+        }
+
+        composable(
+            route = Screen.Shipping.route
+        ) {
+            ShippingScreen(navController)
         }
     }
 }

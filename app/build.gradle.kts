@@ -77,4 +77,6 @@ dependencies {
     //Coroutine
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
+    //Glide
+    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 }

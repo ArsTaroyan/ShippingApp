@@ -1,4 +1,4 @@
-package com.example.shipping.domain.di
+package com.example.shipping.di
 
 //import android.content.Context
 //import dagger.Module

@@ -1,4 +1,4 @@
-package com.example.shipping.presentation
+package com.example.shipping.presentation.comeinscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.shipping.domain.data.preferences.Preference
-import com.example.shipping.domain.data.preferences.Preference.Companion.COMEINCODE
+import com.example.shipping.data.preferences.Preference
+import com.example.shipping.data.preferences.Preference.Companion.COMEINCODE
 import com.example.shipping.domain.utils.Screen
 import kotlinx.coroutines.launch
 

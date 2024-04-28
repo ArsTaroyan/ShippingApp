@@ -1,4 +1,4 @@
-package com.example.shipping.presentation
+package com.example.shipping.presentation.splashscreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.shipping.domain.data.preferences.Preference
+import com.example.shipping.data.preferences.Preference
 import com.example.shipping.domain.utils.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ fun SplashScreen(
 @Composable
 fun AutoComeIn(navController: NavHostController, preference: Preference?) {
     rememberCoroutineScope().launch {
-        delay(2000)
+        delay(1500)
         if (!preference?.readCode(Preference.COMEINCODE).isNullOrEmpty()) {
             navController.navigate(route = Screen.Menu.route) {
                 popUpTo(route = Screen.Splash.route) {
