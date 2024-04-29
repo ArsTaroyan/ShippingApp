@@ -10,11 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun ShippingScreen(navController: NavHostController) {
+fun ShippingScreen(
+    navController: NavHostController
+) {
+    val viewModel = hiltViewModel<ShippingViewModel>()
     Box(
         modifier = Modifier
             .fillMaxSize(),

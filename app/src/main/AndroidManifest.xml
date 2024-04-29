@@ -25,15 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.google.dagger.hilt.android.testing.testAppId"
-            android:value="true" />
-
-        <meta-data
-            android:name="preloaded-classes"
-            android:value="androidx.activity.ComponentActivity,androidx.fragment.app.Fragment,androidx.lifecycle.ViewModel" />
-
     </application>
 
 </manifest>

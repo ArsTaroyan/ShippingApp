@@ -10,10 +10,14 @@ import com.example.shipping.presentation.comeinscreen.ComeInScreen
 import com.example.shipping.presentation.menuscreen.MenuScreen
 import com.example.shipping.presentation.ordersscreen.OrdersScreen
 import com.example.shipping.presentation.shippingscreen.ShippingScreen
+import com.example.shipping.presentation.shippingscreen.ShippingViewModel
 import com.example.shipping.presentation.splashscreen.SplashScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, preference: Preference?) {
+fun NavGraph(
+    navController: NavHostController,
+    preference: Preference?
+) {
     NavHost(
         navController = navController,
         startDestination = Screen.Splash.route
