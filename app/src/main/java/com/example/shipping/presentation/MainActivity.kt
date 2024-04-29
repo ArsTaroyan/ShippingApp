@@ -10,9 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.shipping.data.preferences.Preference
 import com.example.shipping.nav.NavGraph
 import com.example.shipping.ui.theme.ShippingTheme
-//import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
 
