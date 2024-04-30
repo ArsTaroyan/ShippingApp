@@ -1,8 +1,6 @@
 package com.example.shipping.presentation.menuscreen
 
 import android.annotation.SuppressLint
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,24 +34,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shipping.R
 import com.example.shipping.domain.module.Product
+import com.example.shipping.domain.utils.Screen
+import com.example.shipping.extension.convertGsonToString
 import com.example.shipping.presentation.shippingscreen.ShippingViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
 fun ItemProductRow(
+    navController: NavHostController,
     item: Product
 ) {
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
-            .width(185.dp),
+            .width(185.dp)
+            .clickable {
+                navController.navigate(
+                    route = Screen.Details.detailsProduct(
+                        item.convertGsonToString()
+                    )
+                )
+            },
         elevation = CardDefaults.elevatedCardElevation(3.dp),
         colors = CardDefaults.elevatedCardColors(Color.White)
     ) {

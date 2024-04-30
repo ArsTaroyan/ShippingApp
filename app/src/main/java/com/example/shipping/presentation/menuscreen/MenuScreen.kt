@@ -48,7 +48,7 @@ fun MenuScreen(
 @Composable
 fun MenuColumn(navController: NavHostController) {
     LogoImage()
-    InitLazyRow()
+    InitLazyRow(navController)
     InitButton(navController)
 }
 
@@ -107,7 +107,9 @@ fun InitButton(navController: NavHostController) {
 }
 
 @Composable
-fun InitLazyRow() {
+fun InitLazyRow(
+    navController: NavHostController
+) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,17 +118,17 @@ fun InitLazyRow() {
     ) {
         itemsIndexed(
             listOf(
-                Product(1, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdfdasdfasdf", 0.5, 1),
-                Product(2, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdgfasdgff", 0.5, 1),
-                Product(3, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 1.5, 1),
-                Product(4, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfsgrtesshg", 2.5, 1),
-                Product(5, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfgdssdfg.sdfg", 3.5, 1),
-                Product(6, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdrts", 4.5, 1),
-                Product(7, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "xzsc", 5.5, 1),
-                Product(8, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "esrytghdsg", 6.5, 1)
+                Product(1, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdfdasdfasdf", 1, 1),
+                Product(2, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdgfasdgff", 2, 1),
+                Product(3, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 3, 1),
+                Product(4, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfsgrtesshg", 4, 1),
+                Product(5, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfgdssdfg.sdfg", 5, 1),
+                Product(6, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdrts", 6, 1),
+                Product(7, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "xzsc", 7, 1),
+                Product(8, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "esrytghdsg", 8, 1)
             )
         ){_, item ->
-            ItemProductRow(item = item)
+            ItemProductRow(navController = navController, item = item)
         }
     }
 }

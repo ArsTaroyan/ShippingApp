@@ -90,4 +90,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.46.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha02")
     kapt("com.google.dagger:hilt-compiler:2.46.1")
+
+    //Gson
+    implementation("com.google.code.gson:gson:2.9.0")
 }
