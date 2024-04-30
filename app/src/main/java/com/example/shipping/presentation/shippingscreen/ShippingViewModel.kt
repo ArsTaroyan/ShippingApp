@@ -45,6 +45,12 @@ class ShippingViewModel @Inject constructor(
         }
     }
 
+    fun removeAllProducts(products: List<Product>) {
+        viewModelScope.launch {
+            repository.removeAllProducts(products)
+        }
+    }
+
     fun updateProduct(product: Product) {
         viewModelScope.launch {
             repository.updateProduct(product)

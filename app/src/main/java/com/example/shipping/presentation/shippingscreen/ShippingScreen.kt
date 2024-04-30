@@ -1,38 +1,141 @@
 package com.example.shipping.presentation.shippingscreen
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.shipping.domain.module.Product
+import com.example.shipping.domain.utils.Screen
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlin.math.log
 
 @Composable
 fun ShippingScreen(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
-    val viewModel = hiltViewModel<ShippingViewModel>()
-    Box(
+
+    Column(
         modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+            .fillMaxSize()
+            .padding(bottom = 30.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
+        InitLazyColumn(navController)
+    }
+
+}
+
+@SuppressLint("CoroutineCreationDuringComposition")
+@Composable
+fun InitLazyColumn(
+    navController: NavHostController,
+    viewModel: ShippingViewModel = hiltViewModel()
+) {
+    var items by remember {
+        mutableStateOf(listOf<Product>())
+    }
+    var isRemove by remember {
+        mutableStateOf(false)
+    }
+    viewModel.getAllProducts()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.8f),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        itemsIndexed(items) { _, item ->
+            ItemProductColumn(item = item)
+        }
+
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 15.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Button(
             modifier = Modifier
-                .clickable {
-                    navController.popBackStack()
-                },
-            text = "Shipping",
-            fontSize = 50.sp,
-            fontWeight = FontWeight.Bold
-        )
+                .padding(horizontal = 15.dp),
+            onClick = {
+                navController.popBackStack()
+            },
+            shape = RoundedCornerShape(10.dp),
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
+        ) {
+            Text(text = "Back", color = Color.White, fontSize = 15.sp)
+        }
+
+        Button(
+            onClick = {
+//                isRemove = true
+//                viewModel.getAllProducts()
+//                navController.popBackStack()
+            },
+            shape = RoundedCornerShape(10.dp),
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
+        ) {
+            Text(text = "RemoveAll", color = Color.White, fontSize = 15.sp)
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(horizontal = 15.dp),
+            onClick = {
+                /*Shipping*/
+            },
+            shape = RoundedCornerShape(10.dp),
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
+        ) {
+            Text(text = "Shipping", color = Color.White, fontSize = 15.sp)
+        }
+    }
+
+    rememberCoroutineScope().launch {
+        viewModel.getAllProducts.first().collectLatest {
+            if (isRemove) {
+                viewModel.removeAllProducts(it)
+                isRemove = false
+            }
+            items = it
+        }
     }
 }
 

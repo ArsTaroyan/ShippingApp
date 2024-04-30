@@ -1,5 +1,8 @@
 package com.example.shipping.presentation.menuscreen
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +21,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,12 +36,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shipping.R
-import com.example.shipping.domain.module.ItemProduct
+import com.example.shipping.domain.module.Product
+import com.example.shipping.presentation.shippingscreen.ShippingViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+
 @Composable
-fun ItemProductRow(item: ItemProduct) {
+fun ItemProductRow(
+    item: Product
+) {
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
@@ -47,12 +62,25 @@ fun ItemProductRow(item: ItemProduct) {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun BindData(data: ItemProduct) {
+fun BindData(
+    data: Product,
+    viewModel: ShippingViewModel = hiltViewModel()
+) {
     var count by remember {
         mutableIntStateOf(1)
     }
+
+    var item by remember {
+        mutableStateOf<Product?>(null)
+    }
+    var isCopy by remember {
+        mutableStateOf(false)
+    }
+    viewModel.getProduct(data.product_id)
+    viewModel.getAllProducts()
 
     Box(
         modifier = Modifier
@@ -60,7 +88,7 @@ fun BindData(data: ItemProduct) {
         contentAlignment = Alignment.Center
     ) {
         GlideImage(
-            model = data.img,
+            model = data.product_img,
             contentDescription = "loadImage",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -69,12 +97,12 @@ fun BindData(data: ItemProduct) {
         ) {
             it.error(R.drawable.ic_launcher_foreground)
                 .placeholder(R.drawable.ic_launcher_background)
-                .load(data.img)
+                .load(data.product_img)
         }
     }
 
     Text(
-        text = data.description,
+        text = data.product_description,
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
         maxLines = 1,
@@ -84,7 +112,7 @@ fun BindData(data: ItemProduct) {
     )
 
     Text(
-        text = "${data.price}$",
+        text = "${data.product_price * count}$",
         fontSize = 15.sp,
         fontWeight = FontWeight.Bold,
         maxLines = 1,
@@ -107,7 +135,7 @@ fun BindData(data: ItemProduct) {
             modifier = Modifier
                 .clickable {
                     if (count > 1) {
-                        count--
+                        --count
                     }
                 }
         )
@@ -123,7 +151,7 @@ fun BindData(data: ItemProduct) {
             contentDescription = null,
             modifier = Modifier
                 .clickable {
-                    count++
+                    ++count
                 }
         )
     }
@@ -133,7 +161,13 @@ fun BindData(data: ItemProduct) {
             .fillMaxWidth()
             .padding(top = 10.dp, start = 15.dp, end = 15.dp, bottom = 10.dp),
         onClick = {
-
+            if (count > 0 && !isCopy) {
+                viewModel.addProduct(data.copy(product_count = count))
+                count = 1
+            } else if (count > 0) {
+                viewModel.updateProduct(data.copy(product_count = count))
+                count = 1
+            }
         },
         shape = RoundedCornerShape(10.dp),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
@@ -141,4 +175,15 @@ fun BindData(data: ItemProduct) {
         Text(text = "Add to Card", color = Color.White, fontSize = 18.sp)
     }
 
+    rememberCoroutineScope().launch {
+        viewModel.getProduct.collectLatest {
+            item = it
+        }
+    }
+
+    rememberCoroutineScope().launch {
+        viewModel.getAllProducts.first().collectLatest {
+            isCopy = it.contains(item)
+        }
+    }
 }

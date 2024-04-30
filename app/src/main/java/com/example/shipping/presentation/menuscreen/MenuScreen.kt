@@ -27,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shipping.R
-import com.example.shipping.domain.module.ItemProduct
+import com.example.shipping.domain.module.Product
 import com.example.shipping.domain.utils.Screen
 
 
@@ -73,8 +73,7 @@ fun LogoImage() {
 fun InitButton(navController: NavHostController) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
             .padding(top = 15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -117,14 +116,14 @@ fun InitLazyRow() {
     ) {
         itemsIndexed(
             listOf(
-                ItemProduct(1, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "akhsdgjhagsdewrrsdtsdfgfdssdfg", 0.5, 0),
-                ItemProduct(2, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 0.5, 0),
-                ItemProduct(3, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 0.5, 0),
-                ItemProduct(4, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 0.5, 0),
-                ItemProduct(5, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "akhsdgjhasdl.fkjhkjulasdhflkijasdhfkasdfagsdewrrsdtsdfgfdssdfg", 0.5, 0),
-                ItemProduct(6, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "akhsdgjhagsdesdfgfdssdfg", 0.5, 0),
-                ItemProduct(7, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "xzsc", 0.5, 0),
-                ItemProduct(8, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "akhsdgjhagsdewrrsdtsdfgfdssdfg", 0.5, 0)
+                Product(1, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdfdasdfasdf", 0.5, 1),
+                Product(2, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "asdgfasdgff", 0.5, 1),
+                Product(3, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "dasfasdf", 1.5, 1),
+                Product(4, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfsgrtesshg", 2.5, 1),
+                Product(5, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdfgdssdfg.sdfg", 3.5, 1),
+                Product(6, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "sdfgdrts", 4.5, 1),
+                Product(7, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "xzsc", 5.5, 1),
+                Product(8, "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704", "esrytghdsg", 6.5, 1)
             )
         ){_, item ->
             ItemProductRow(item = item)
