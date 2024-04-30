@@ -67,9 +67,6 @@ fun InitLazyColumn(
     var items by remember {
         mutableStateOf(listOf<Product>())
     }
-    var isRemove by remember {
-        mutableStateOf(false)
-    }
     viewModel.getAllProducts()
 
     LazyColumn(
@@ -105,9 +102,8 @@ fun InitLazyColumn(
 
         Button(
             onClick = {
-//                isRemove = true
-//                viewModel.getAllProducts()
-//                navController.popBackStack()
+                viewModel.removeAllProducts()
+                navController.popBackStack()
             },
             shape = RoundedCornerShape(10.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
@@ -130,10 +126,6 @@ fun InitLazyColumn(
 
     rememberCoroutineScope().launch {
         viewModel.getAllProducts.first().collectLatest {
-            if (isRemove) {
-                viewModel.removeAllProducts(it)
-                isRemove = false
-            }
             items = it
         }
     }

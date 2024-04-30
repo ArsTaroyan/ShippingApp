@@ -13,7 +13,7 @@ interface Repository {
 
     suspend fun removeProduct(product: Product)
 
-    suspend fun removeAllProducts(products: List<Product>)
+    suspend fun removeAllProducts()
 
     suspend fun updateProduct(product: Product)
 

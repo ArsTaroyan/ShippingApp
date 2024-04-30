@@ -21,8 +21,8 @@ class RepositoryImpl @Inject constructor(
         productDao.removeProduct(product)
     }
 
-    override suspend fun removeAllProducts(products: List<Product>) {
-        productDao.removeAllProduct(products)
+    override suspend fun removeAllProducts() {
+        productDao.removeAllProduct()
     }
 
     override suspend fun updateProduct(product: Product) {
