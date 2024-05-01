@@ -169,7 +169,9 @@ fun BindData(
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 15.dp),
         onClick = {
-            if (count == 1) {
+            if (count == 1 && !isCopy) {
+                viewModel.addProduct(data.copy(product_count = count))
+            }else if(count == 1) {
                 viewModel.updateProduct(data.copy(product_count = count))
             } else if(!isCopy) {
                 viewModel.addProduct(data.copy(product_count = count))
