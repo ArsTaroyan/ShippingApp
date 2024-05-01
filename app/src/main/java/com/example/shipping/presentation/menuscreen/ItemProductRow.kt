@@ -1,6 +1,7 @@
 package com.example.shipping.presentation.menuscreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -166,12 +167,14 @@ fun BindData(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 10.dp, start = 15.dp, end = 15.dp, bottom = 10.dp),
+            .padding(vertical = 10.dp, horizontal = 15.dp),
         onClick = {
-            if (count > 0 && !isCopy) {
+            if (count == 1) {
+                viewModel.updateProduct(data.copy(product_count = count))
+            } else if(!isCopy) {
                 viewModel.addProduct(data.copy(product_count = count))
                 count = 1
-            } else if (count > 0) {
+            } else {
                 viewModel.updateProduct(data.copy(product_count = count))
                 count = 1
             }

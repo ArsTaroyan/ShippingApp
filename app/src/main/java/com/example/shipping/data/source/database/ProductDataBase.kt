@@ -9,7 +9,7 @@ import com.example.shipping.domain.module.Product
     entities = [
         Product::class
     ],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class ProductDataBase: RoomDatabase() {

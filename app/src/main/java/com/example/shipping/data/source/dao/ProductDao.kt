@@ -11,13 +11,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProduct(product: Product)
 
     @Delete
     suspend fun removeProduct(product: Product)
-
 
     @Query("DELETE FROM products")
     suspend fun removeAllProduct()
