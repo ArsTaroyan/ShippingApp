@@ -44,7 +44,6 @@ fun MenuScreen(
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun MenuColumn(navController: NavHostController) {
     LogoImage()

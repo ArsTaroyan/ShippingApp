@@ -1,7 +1,6 @@
 package com.example.shipping.presentation.menuscreen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +18,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -81,14 +81,14 @@ fun BindData(
         mutableIntStateOf(1)
     }
 
-    var item by remember {
-        mutableStateOf<Product?>(null)
-    }
     var isCopy by remember {
         mutableStateOf(false)
     }
+
     viewModel.getProduct(data.product_id)
     viewModel.getAllProducts()
+
+    val product by viewModel.getProduct.collectAsState(initial = null)
 
     Box(
         modifier = Modifier
@@ -169,16 +169,12 @@ fun BindData(
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 15.dp),
         onClick = {
-            if (count == 1 && !isCopy) {
+            count = if(!isCopy) {
                 viewModel.addProduct(data.copy(product_count = count))
-            }else if(count == 1) {
-                viewModel.updateProduct(data.copy(product_count = count))
-            } else if(!isCopy) {
-                viewModel.addProduct(data.copy(product_count = count))
-                count = 1
+                1
             } else {
                 viewModel.updateProduct(data.copy(product_count = count))
-                count = 1
+                1
             }
         },
         shape = RoundedCornerShape(10.dp),
@@ -188,14 +184,8 @@ fun BindData(
     }
 
     rememberCoroutineScope().launch {
-        viewModel.getProduct.collectLatest {
-            item = it
-        }
-    }
-
-    rememberCoroutineScope().launch {
         viewModel.getAllProducts.first().collectLatest {
-            isCopy = it.contains(item)
+            isCopy = it.contains(product)
         }
     }
 }
