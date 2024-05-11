@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shipping.data.preferences.Preference
 import com.example.shipping.data.preferences.Preference.Companion.COMEINCODE
+import com.example.shipping.domain.utils.HOME_ROUTE
 import com.example.shipping.domain.utils.Screen
 import kotlinx.coroutines.launch
 
@@ -77,7 +78,7 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
             scope.launch {
                 if (textState == "11111") {
                     preference?.saveCode(COMEINCODE, textState)
-                    navController.navigate(route = Screen.Menu.route) {
+                    navController.navigate(HOME_ROUTE) {
                         popUpTo(Screen.ComeIn.route) {
                             inclusive = true
                         }

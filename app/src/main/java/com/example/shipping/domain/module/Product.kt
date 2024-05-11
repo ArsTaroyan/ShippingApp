@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity("products")
 data class Product(
     @PrimaryKey(autoGenerate = true) val product_id: Long,
+    @ColumnInfo("product_name") var product_name: String,
     @ColumnInfo("product_img") var product_img: String,
     @ColumnInfo("product_description") var product_description: String,
     @ColumnInfo("product_price") var product_price: Long,

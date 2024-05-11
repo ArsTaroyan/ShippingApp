@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shipping.data.preferences.Preference
+import com.example.shipping.domain.utils.HOME_ROUTE
 import com.example.shipping.domain.utils.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ fun AutoComeIn(navController: NavHostController, preference: Preference?) {
     rememberCoroutineScope().launch {
         delay(1500)
         if (!preference?.readCode(Preference.COMEINCODE).isNullOrEmpty()) {
-            navController.navigate(route = Screen.Menu.route) {
+            navController.navigate(HOME_ROUTE) {
                 popUpTo(route = Screen.Splash.route) {
                     inclusive = true
                 }
