@@ -1,5 +1,6 @@
 package com.example.shipping.presentation.comeinscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,13 +25,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,8 +43,8 @@ import com.example.shipping.data.preferences.Preference
 import com.example.shipping.data.preferences.Preference.Companion.COMEINCODE
 import com.example.shipping.domain.utils.HOME_ROUTE
 import com.example.shipping.domain.utils.Screen
+import com.example.shipping.extension.gradientButton
 import com.example.shipping.presentation.menuscreen.LogoImage
-import com.example.shipping.ui.theme.ButtonColor
 import kotlinx.coroutines.launch
 
 
@@ -72,13 +73,12 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
     LogoImage()
 
     Column(
-        Modifier.padding(bottom = 45.dp)
+        Modifier.padding(bottom = 60.dp)
     ) {
         val text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontSize = 50.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular))
+                    fontSize = 50.sp
                 )
             ) {
                 append("Hello,\n\n")
@@ -97,7 +97,7 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
 
         Spacer(Modifier.padding(top = 20.dp))
 
-        OutlinedTextField(
+        TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
@@ -108,14 +108,14 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
             placeholder = {
                 Text(text = "Input your code")
             },
-            shape = RoundedCornerShape(10.dp),
             maxLines = 1,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
+            colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Black,
-                cursorColor = Color.Black
+                cursorColor = Color.Black,
+                containerColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
             )
         )
     }
@@ -123,7 +123,11 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp),
+            .height(55.dp)
+            .background(
+                Brush.gradientButton(),
+                RoundedCornerShape(10.dp),
+            ),
         onClick = {
             scope.launch {
                 if (textState == "11111") {
@@ -136,13 +140,16 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
                 }
             }
         },
-        shape = RoundedCornerShape(10.dp),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = ButtonColor
+            containerColor = Color.Transparent
         )
     ) {
-        Text(text = "Login", color = Color.White, fontSize = 25.sp, fontFamily = FontFamily(Font(R.font.poppins_regular)))
+        Text(
+            text = "Login",
+            color = Color.White,
+            fontSize = 25.sp
+        )
     }
 }
 

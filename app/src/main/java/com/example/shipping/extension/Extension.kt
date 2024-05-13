@@ -1,5 +1,6 @@
 package com.example.shipping.extension
 
+import androidx.compose.ui.graphics.Brush
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,6 +14,9 @@ import com.example.shipping.domain.utils.Screen
 import com.example.shipping.presentation.comeinscreen.ComeInScreen
 import com.example.shipping.presentation.detailsscreen.DetailsScreen
 import com.example.shipping.presentation.splashscreen.SplashScreen
+import com.example.shipping.ui.theme.endButton
+import com.example.shipping.ui.theme.midButton
+import com.example.shipping.ui.theme.startButton
 import com.google.gson.Gson
 
 fun <T> T.convertGsonToString(): String = Gson().toJson(this)
@@ -61,3 +65,12 @@ fun NavGraphBuilder.detailsNavGraph(
         }
     }
 }
+
+fun Brush.Companion.gradientButton(): Brush =
+    verticalGradient(
+        colors = listOf(
+            startButton,
+            midButton,
+            endButton
+        )
+    )

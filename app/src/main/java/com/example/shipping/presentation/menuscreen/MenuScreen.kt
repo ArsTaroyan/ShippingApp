@@ -1,5 +1,6 @@
 package com.example.shipping.presentation.menuscreen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -8,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,8 +34,10 @@ fun MenuScreen(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .fillMaxSize()
+            .padding(top = 20.dp, start = 15.dp, end = 15.dp, bottom = 60.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MenuColumn(navController = navController)
     }
@@ -61,11 +69,13 @@ fun LogoImage() {
 fun InitLazyRow(
     navController: NavHostController
 ) {
-    LazyRow(
+    LazyVerticalStaggeredGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.8f),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(top = 20.dp),
+        verticalItemSpacing = 10.dp,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        columns = StaggeredGridCells.Fixed(2)
     ) {
         itemsIndexed(
             listOf(
