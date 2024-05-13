@@ -1,9 +1,12 @@
 package com.example.shipping.presentation.comeinscreen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,25 +15,35 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.shipping.R
 import com.example.shipping.data.preferences.Preference
 import com.example.shipping.data.preferences.Preference.Companion.COMEINCODE
 import com.example.shipping.domain.utils.HOME_ROUTE
 import com.example.shipping.domain.utils.Screen
+import com.example.shipping.presentation.menuscreen.LogoImage
+import com.example.shipping.ui.theme.ButtonColor
 import kotlinx.coroutines.launch
 
 
@@ -42,8 +55,9 @@ fun ComeInScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 50.dp, horizontal = 30.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .padding(vertical = 20.dp, horizontal = 15.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ComeInColum(navController, preference)
     }
@@ -55,25 +69,61 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
     var textState by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
 
-    Text(text = "Come in", fontSize = 40.sp, fontWeight = FontWeight.Bold)
+    LogoImage()
 
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth(),
-        value = textState,
-        onValueChange = {
-            if (it.length <= 5) textState = it
-        },
-        placeholder = {
-            Text(text = "Input your code")
-        },
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-    )
+    Column(
+        Modifier.padding(bottom = 45.dp)
+    ) {
+        val text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 50.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular))
+                )
+            ) {
+                append("Hello,\n\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 50.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold))
+                )
+            ) {
+                append("welcome!")
+            }
+        }
+
+        Text(text = text)
+
+        Spacer(Modifier.padding(top = 20.dp))
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
+            value = textState,
+            onValueChange = {
+                if (it.length <= 5) textState = it
+            },
+            placeholder = {
+                Text(text = "Input your code")
+            },
+            shape = RoundedCornerShape(10.dp),
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                textColor = Color.Black,
+                cursorColor = Color.Black
+            )
+        )
+    }
 
     Button(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(55.dp),
         onClick = {
             scope.launch {
                 if (textState == "11111") {
@@ -88,8 +138,11 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
         },
         shape = RoundedCornerShape(10.dp),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = ButtonColor
+        )
     ) {
-        Text(text = "Come in", color = Color.White, fontSize = 20.sp)
+        Text(text = "Login", color = Color.White, fontSize = 25.sp, fontFamily = FontFamily(Font(R.font.poppins_regular)))
     }
 }
 

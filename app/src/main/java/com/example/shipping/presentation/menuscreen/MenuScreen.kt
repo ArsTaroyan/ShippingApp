@@ -49,8 +49,7 @@ fun LogoImage() {
         contentDescription = "loadImage",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .size(70.dp, 80.dp)
-            .padding(top = 15.dp)
+            .size(70.dp, 70.dp)
     ) {
         it.error(R.drawable.ic_launcher_foreground)
             .placeholder(R.drawable.ic_launcher_background)
