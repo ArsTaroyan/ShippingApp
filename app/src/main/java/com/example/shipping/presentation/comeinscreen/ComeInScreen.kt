@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -38,13 +40,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shipping.R
 import com.example.shipping.data.preferences.Preference
 import com.example.shipping.data.preferences.Preference.Companion.COMEINCODE
 import com.example.shipping.domain.utils.HOME_ROUTE
 import com.example.shipping.domain.utils.Screen
 import com.example.shipping.extension.gradientButton
-import com.example.shipping.presentation.menuscreen.LogoImage
 import kotlinx.coroutines.launch
 
 
@@ -64,13 +67,23 @@ fun ComeInScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun ComeInColum(navController: NavHostController, preference: Preference?) {
     var textState by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
 
-    LogoImage()
+    GlideImage(
+        model = "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704",
+        contentDescription = "loadImage",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .size(60.dp, 60.dp)
+    ) {
+        it.error(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.ic_launcher_background)
+            .load("https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704")
+    }
 
     Column(
         Modifier.padding(bottom = 60.dp)
