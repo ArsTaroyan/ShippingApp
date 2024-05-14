@@ -15,9 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.shipping.domain.utils.BottomNavigationScreen
 import com.example.shipping.extension.gradientButton
+import com.example.shipping.extension.whiteButton
 
 @Composable
 fun BottomNav(
@@ -31,23 +33,22 @@ fun BottomNav(
     )
 
     BottomNavigation(
-        backgroundColor = Color.White,
         elevation = 5.dp
     ) {
-
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRout = backStackEntry?.destination?.route
+        var brush: Brush
 
         listItems.forEach { item ->
+            brush = if (currentRout == item.route) Brush.gradientButton() else Brush.whiteButton()
             BottomNavigationItem(
                 modifier = Modifier
-                    .background(Brush.gradientButton()),
+                    .background(brush),
                 selected = currentRout == item.route,
                 onClick = {
                    navController.navigate(item.route) {
-                       popUpTo(route = item.route) {
-                           inclusive = true
-                       }
+                       popUpTo(navController.graph.findStartDestination().id)
+                       launchSingleTop = true
                    }
                 },
                 icon = { 

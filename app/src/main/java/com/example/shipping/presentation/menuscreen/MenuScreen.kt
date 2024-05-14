@@ -3,18 +3,16 @@ package com.example.shipping.presentation.menuscreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,8 +32,7 @@ fun MenuScreen(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 20.dp, start = 15.dp, end = 15.dp, bottom = 60.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -52,16 +49,30 @@ fun MenuColumn(navController: NavHostController) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun LogoImage() {
-    GlideImage(
-        model = "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704",
-        contentDescription = "loadImage",
-        contentScale = ContentScale.Crop,
+    Surface(
         modifier = Modifier
-            .size(70.dp, 70.dp)
+            .fillMaxWidth()
+            .height(60.dp),
+        shadowElevation = 9.dp
     ) {
-        it.error(R.drawable.ic_launcher_foreground)
-            .placeholder(R.drawable.ic_launcher_background)
-            .load("https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704")
+        Row(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            GlideImage(
+                model = "https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704",
+                contentDescription = "loadImage",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(60.dp, 60.dp)
+                    .padding(vertical = 10.dp, horizontal = 15.dp)
+            ) {
+                it.error(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .load("https://www.gunz.cc/Product-image/Coca-Cola-033l-Image-1.webp?SFRXZPIM=V65ID000003232Next14_42336_rd704")
+            }
+        }
     }
 }
 
@@ -72,9 +83,8 @@ fun InitLazyRow(
     LazyVerticalStaggeredGrid(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp),
-        verticalItemSpacing = 10.dp,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+            .padding(start = 15.dp, end = 15.dp, bottom = 60.dp),
+        horizontalArrangement = Arrangement.spacedBy(30.dp),
         columns = StaggeredGridCells.Fixed(2)
     ) {
         itemsIndexed(

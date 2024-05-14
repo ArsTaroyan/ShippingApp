@@ -1,21 +1,22 @@
 package com.example.shipping.presentation.menuscreen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,10 +28,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +45,7 @@ import com.example.shipping.R
 import com.example.shipping.domain.module.Product
 import com.example.shipping.domain.utils.Screen
 import com.example.shipping.extension.convertGsonToString
+import com.example.shipping.extension.gradientButton
 import com.example.shipping.presentation.shippingscreen.ShippingViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -52,19 +56,17 @@ fun ItemProductRow(
     navController: NavHostController,
     item: Product
 ) {
-    ElevatedCard(
+    Column(
         modifier = Modifier
-            .padding(10.dp)
             .width(185.dp)
+            .padding(top = 30.dp)
             .clickable {
                 navController.navigate(
                     route = Screen.Details.detailsProduct(
                         item.convertGsonToString()
                     )
                 )
-            },
-        elevation = CardDefaults.elevatedCardElevation(3.dp),
-        colors = CardDefaults.elevatedCardColors(Color.White)
+            }
     ) {
         BindData(item)
     }
@@ -100,8 +102,7 @@ fun BindData(
             contentDescription = "loadImage",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(width = 120.dp, height = 130.dp)
-                .padding(top = 15.dp)
+                .size(width = 90.dp, height = 100.dp)
         ) {
             it.error(R.drawable.ic_launcher_foreground)
                 .placeholder(R.drawable.ic_launcher_background)
@@ -110,77 +111,93 @@ fun BindData(
     }
 
     Text(
-        text = data.product_description,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold,
+        text = data.product_name,
+        fontSize = 12.sp,
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         modifier = Modifier
-            .padding(top = 10.dp, start = 15.dp, end = 15.dp)
+            .padding(top = 10.dp)
     )
 
     Text(
         text = "${data.product_price * count}$",
-        fontSize = 15.sp,
-        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         modifier = Modifier
-            .padding(top = 10.dp, start = 15.dp, end = 15.dp),
+            .padding(top = 7.dp),
     )
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, start = 15.dp, end = 15.dp)
-            .border(width = 1.dp, Color.Black)
-            .padding(10.dp),
+            .fillMaxSize()
+            .padding(top = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_remove),
-            contentDescription = null,
+        Row(
             modifier = Modifier
-                .clickable {
-                    if (count > 1) {
-                        --count
+                .fillMaxHeight()
+                .fillMaxWidth(0.8f)
+                .padding(end = 20.dp)
+                .border(width = 1.dp, Color.Black, shape = RoundedCornerShape(5.dp))
+                .padding(12.dp)
+                .background(color = Color.Transparent),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_remove),
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable {
+                        if (count > 1) {
+                            --count
+                        }
+                    }
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp),
+                text = "$count",
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                fontSize = 15.sp
+            )
+
+            Icon(
+                painter = painterResource(R.drawable.ic_add),
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable {
+                        ++count
+                    }
+            )
+        }
+
+        IconButton(
+            modifier = Modifier
+                .padding(end = 10.dp)
+                .background(
+                    Brush.gradientButton(),
+                    RoundedCornerShape(5.dp)
+                ),
+            onClick =  {
+                    count = if (!isCopy) {
+                        viewModel.addProduct(data.copy(product_count = count))
+                        1
+                    } else {
+                        viewModel.updateProduct(data.copy(product_count = count))
+                        1
                     }
                 }
-        )
-
-        Text(
-            modifier = Modifier
-                .padding(horizontal = 10.dp),
-            text = "$count",
-        )
-
-        Icon(
-            painter = painterResource(id = R.drawable.ic_add),
-            contentDescription = null,
-            modifier = Modifier
-                .clickable {
-                    ++count
-                }
-        )
-    }
-
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 10.dp, horizontal = 15.dp),
-        onClick = {
-            count = if(!isCopy) {
-                viewModel.addProduct(data.copy(product_count = count))
-                1
-            } else {
-                viewModel.updateProduct(data.copy(product_count = count))
-                1
-            }
-        },
-        shape = RoundedCornerShape(10.dp),
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
-    ) {
-        Text(text = "Add to Card", color = Color.White, fontSize = 18.sp)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.add_to_cart),
+                contentDescription = null,
+                tint = Color.White
+            )
+        }
     }
 
     rememberCoroutineScope().launch {

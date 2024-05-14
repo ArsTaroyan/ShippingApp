@@ -14,9 +14,10 @@ import com.example.shipping.domain.utils.Screen
 import com.example.shipping.presentation.comeinscreen.ComeInScreen
 import com.example.shipping.presentation.detailsscreen.DetailsScreen
 import com.example.shipping.presentation.splashscreen.SplashScreen
-import com.example.shipping.ui.theme.endButton
-import com.example.shipping.ui.theme.midButton
-import com.example.shipping.ui.theme.startButton
+import com.example.shipping.ui.theme.selectEndButton
+import com.example.shipping.ui.theme.selectStartButton
+import com.example.shipping.ui.theme.unselectEndButton
+import com.example.shipping.ui.theme.unselectStartButton
 import com.google.gson.Gson
 
 fun <T> T.convertGsonToString(): String = Gson().toJson(this)
@@ -69,8 +70,15 @@ fun NavGraphBuilder.detailsNavGraph(
 fun Brush.Companion.gradientButton(): Brush =
     verticalGradient(
         colors = listOf(
-            startButton,
-            midButton,
-            endButton
+            selectStartButton,
+            selectEndButton
+        )
+    )
+
+fun Brush.Companion.whiteButton(): Brush =
+    verticalGradient(
+        colors = listOf(
+            unselectStartButton,
+            unselectEndButton
         )
     )
