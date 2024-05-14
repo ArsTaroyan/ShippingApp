@@ -78,7 +78,7 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
         contentDescription = "loadImage",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .size(60.dp, 60.dp)
+            .size(80.dp, 80.dp)
     ) {
         it.error(R.drawable.ic_launcher_foreground)
             .placeholder(R.drawable.ic_launcher_background)
