@@ -62,7 +62,12 @@ fun NavGraphBuilder.detailsNavGraph(
             )
         ) { index ->
             index.arguments?.getString(DETAILS_PRODUCT)
-                ?.let { DetailsScreen(navController, it.convertStringToGson()) }
+                ?.let {
+                    DetailsScreen(
+                        product = it.convertStringToGson(),
+                        navController = navController
+                    )
+                }
         }
     }
 }

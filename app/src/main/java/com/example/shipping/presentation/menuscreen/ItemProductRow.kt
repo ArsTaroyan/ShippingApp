@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -59,7 +58,7 @@ fun ItemProductRow(
     Column(
         modifier = Modifier
             .width(185.dp)
-            .padding(top = 30.dp)
+            .padding(top = 20.dp, bottom = 10.dp)
             .clickable {
                 navController.navigate(
                     route = Screen.Details.detailsProduct(
@@ -87,10 +86,7 @@ fun BindData(
         mutableStateOf(false)
     }
 
-    viewModel.getProduct(data.product_id)
     viewModel.getAllProducts()
-
-    val product by viewModel.getProduct.collectAsState(initial = null)
 
     Box(
         modifier = Modifier
@@ -182,15 +178,15 @@ fun BindData(
                     Brush.gradientButton(),
                     RoundedCornerShape(5.dp)
                 ),
-            onClick =  {
-                    count = if (!isCopy) {
-                        viewModel.addProduct(data.copy(product_count = count))
-                        1
-                    } else {
-                        viewModel.updateProduct(data.copy(product_count = count))
-                        1
-                    }
+            onClick = {
+                count = if (!isCopy) {
+                    viewModel.addProduct(data.copy(product_count = count))
+                    1
+                } else {
+                    viewModel.updateProduct(data.copy(product_count = count))
+                    1
                 }
+            }
         ) {
             Icon(
                 painter = painterResource(R.drawable.add_to_cart),
@@ -202,7 +198,7 @@ fun BindData(
 
     rememberCoroutineScope().launch {
         viewModel.getAllProducts.first().collectLatest {
-            isCopy = it.contains(product)
+            isCopy = it.contains(data)
         }
     }
 }

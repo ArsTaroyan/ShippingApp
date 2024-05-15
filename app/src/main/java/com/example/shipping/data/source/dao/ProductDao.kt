@@ -25,7 +25,4 @@ interface ProductDao {
 
     @Query("SELECT * FROM products")
     fun getAllProducts(): Flow<List<Product>>
-
-    @Query("SELECT * FROM products WHERE product_id = :id")
-    suspend fun getProduct(id: Long): Product?
 }

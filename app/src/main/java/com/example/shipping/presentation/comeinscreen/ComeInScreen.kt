@@ -35,11 +35,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shipping.R
@@ -164,10 +162,4 @@ fun ComeInColum(navController: NavHostController, preference: Preference?) {
             fontSize = 25.sp
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ComeInScreenPreview() {
-    ComeInScreen(navController = rememberNavController(), preference = null)
 }

@@ -35,7 +35,7 @@ fun HomeNavGraph(
         composable(
             route = BottomNavigationScreen.Shipping.route
         ) {
-            ShippingScreen(navController)
+            ShippingScreen()
         }
 
         detailsNavGraph(navController)

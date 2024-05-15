@@ -18,18 +18,9 @@ class ShippingViewModel @Inject constructor(
 ) : ViewModel() {
     val getAllProducts = MutableSharedFlow<Flow<List<Product>>>(1)
 
-    private val _getProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
-    val getProduct = _getProduct.asSharedFlow()
-
     fun getAllProducts() {
         viewModelScope.launch {
             getAllProducts.emit(repository.getAllProducts())
-        }
-    }
-
-    fun getProduct(id: Long) {
-        viewModelScope.launch {
-            _getProduct.emit(repository.getProduct(id))
         }
     }
 

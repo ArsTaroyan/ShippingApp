@@ -33,7 +33,7 @@ fun BottomNav(
     )
 
     BottomNavigation(
-        elevation = 5.dp
+        elevation = 10.dp
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRout = backStackEntry?.destination?.route
@@ -46,12 +46,12 @@ fun BottomNav(
                     .background(brush),
                 selected = currentRout == item.route,
                 onClick = {
-                   navController.navigate(item.route) {
-                       popUpTo(navController.graph.findStartDestination().id)
-                       launchSingleTop = true
-                   }
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
                 },
-                icon = { 
+                icon = {
                     Icon(
                         modifier = Modifier.padding(3.dp),
                         painter = painterResource(id = item.iconId),

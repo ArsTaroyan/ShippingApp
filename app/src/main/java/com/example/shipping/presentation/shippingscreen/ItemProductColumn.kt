@@ -1,5 +1,6 @@
 package com.example.shipping.presentation.shippingscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,14 +8,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,8 +45,9 @@ fun ItemProductColumn(item: Product) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 15.dp, bottom = 5.dp, start = 15.dp, end = 15.dp)
             .height(150.dp)
-            .border(1.dp, Color.Black)
+            .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -72,7 +77,7 @@ fun BindData(
             contentDescription = "loadImage",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(width = 80.dp, height = 90.dp)
+                .size(width = 100.dp, height = 110.dp)
         ) {
             it.error(R.drawable.ic_launcher_foreground)
                 .placeholder(R.drawable.ic_launcher_background)
@@ -82,16 +87,15 @@ fun BindData(
 
     Column(
         modifier = Modifier
-            .fillMaxHeight()
-            .padding(end = 10.dp),
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
         Text(
-            text = data.product_description,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            text = data.product_name,
+            fontSize = 12.sp,
             maxLines = 2,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth(0.5f)
@@ -99,29 +103,21 @@ fun BindData(
 
         Text(
             text = "${data.product_price * count}$",
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
 
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(vertical = 15.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .border(width = 1.dp, Color.Black)
-                .padding(10.dp),
+                .fillMaxWidth(0.6f)
+                .border(width = 1.dp, Color.Black, shape = RoundedCornerShape(5.dp))
+                .padding(12.dp)
+                .background(color = Color.Transparent),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_remove),
+                painter = painterResource(R.drawable.ic_remove),
                 contentDescription = null,
                 modifier = Modifier
                     .clickable {
@@ -130,15 +126,15 @@ fun BindData(
                         }
                     }
             )
-
             Text(
                 modifier = Modifier
                     .padding(horizontal = 10.dp),
                 text = "$count",
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                fontSize = 15.sp
             )
-
             Icon(
-                painter = painterResource(id = R.drawable.ic_add),
+                painter = painterResource(R.drawable.ic_add),
                 contentDescription = null,
                 modifier = Modifier
                     .clickable {
@@ -146,18 +142,20 @@ fun BindData(
                     }
             )
         }
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(),
-            onClick = {
-                viewModel.removeProduct(data)
-            },
-            shape = RoundedCornerShape(10.dp),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
-        ) {
-            Text(text = "Delete to Card", color = Color.White, fontSize = 12.sp)
-        }
     }
 
+    IconButton(
+        onClick = {
+            viewModel.removeProduct(data)
+        }
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(top = 10.dp, start = 10.dp)
+                .fillMaxSize(),
+            imageVector = Icons.Default.Clear,
+            contentDescription = null,
+        )
+    }
 }
+

@@ -12,6 +12,6 @@ import com.example.shipping.domain.module.Product
     version = 1,
     exportSchema = false
 )
-abstract class ProductDataBase: RoomDatabase() {
+abstract class ProductDataBase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 }

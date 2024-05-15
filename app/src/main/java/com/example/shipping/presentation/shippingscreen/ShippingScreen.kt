@@ -1,12 +1,12 @@
 package com.example.shipping.presentation.shippingscreen
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -22,29 +22,29 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.shipping.domain.module.Product
+import com.example.shipping.extension.gradientButton
+import com.example.shipping.presentation.menuscreen.LogoImage
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+
 @Composable
-fun ShippingScreen(
-    navController: NavHostController,
-) {
+fun ShippingScreen() {
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 30.dp),
+            .padding(bottom = 55.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        InitLazyColumn(navController)
+        LogoImage()
+        InitLazyColumn()
     }
 
 }
@@ -52,66 +52,118 @@ fun ShippingScreen(
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun InitLazyColumn(
-    navController: NavHostController,
     viewModel: ShippingViewModel = hiltViewModel()
 ) {
     var items by remember {
         mutableStateOf(listOf<Product>())
     }
+    var isVisible by remember {
+        mutableStateOf(true)
+    }
     viewModel.getAllProducts()
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.8f),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        itemsIndexed(items) { _, item ->
-            ItemProductColumn(item = item)
-        }
-
-    }
-
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 15.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        Button(
+        LazyColumn(
             modifier = Modifier
-                .padding(horizontal = 15.dp),
-            onClick = {
-                navController.popBackStack()
-            },
-            shape = RoundedCornerShape(10.dp),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
+                .fillMaxSize()
         ) {
-            Text(text = "Back", color = Color.White, fontSize = 15.sp)
-        }
+            itemsIndexed(items) { _, item ->
+                ItemProductColumn(item = item)
+            }
 
-        Button(
-            onClick = {
-                viewModel.removeAllProducts()
-                navController.popBackStack()
-            },
-            shape = RoundedCornerShape(10.dp),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
-        ) {
-            Text(text = "RemoveAll", color = Color.White, fontSize = 15.sp)
         }
-
-        Button(
-            modifier = Modifier
-                .padding(horizontal = 15.dp),
-            onClick = {
-                /*Shipping*/
-            },
-            shape = RoundedCornerShape(10.dp),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = 3.dp),
+        AnimatedVisibility(
+            visible = isVisible
         ) {
-            Text(text = "Shipping", color = Color.White, fontSize = 15.sp)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 7.dp, end = 15.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End,
+            ) {
+                Button(
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .background(
+                            Brush.gradientButton(),
+                            RoundedCornerShape(5.dp),
+                        ),
+                    onClick = {
+                        isVisible = false
+                    },
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(text = "Gone", color = Color.White, fontSize = 15.sp)
+                }
+                Button(
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .background(
+                            Brush.gradientButton(),
+                            RoundedCornerShape(5.dp),
+                        ),
+                    onClick = {
+                        /*Shipping*/
+                    },
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(text = "Shipping", color = Color.White, fontSize = 15.sp)
+                }
+                Button(
+                    modifier = Modifier
+                        .background(
+                            Brush.gradientButton(),
+                            RoundedCornerShape(5.dp),
+                        ),
+                    onClick = {
+                        viewModel.removeAllProducts()
+                    },
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(text = "RemoveAll", color = Color.White, fontSize = 15.sp)
+                }
+            }
+        }
+        AnimatedVisibility(
+            visible = !isVisible
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 7.dp, start = 15.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start,
+            ) {
+                Button(
+                    modifier = Modifier
+                        .background(
+                            Brush.gradientButton(),
+                            RoundedCornerShape(5.dp),
+                        ),
+                    onClick = {
+                        isVisible = true
+                    },
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(text = "Visible", color = Color.White, fontSize = 15.sp)
+                }
+            }
         }
     }
 
@@ -120,10 +172,4 @@ fun InitLazyColumn(
             items = it
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ShippingScreenPreview() {
-    ShippingScreen(navController = rememberNavController())
 }
