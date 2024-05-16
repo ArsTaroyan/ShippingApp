@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.shipping.R
 import com.example.shipping.domain.module.Order
+import com.example.shipping.domain.utils.Screen
+import com.example.shipping.extension.convertGsonToString
 import com.example.shipping.extension.gradientButton
 
 
@@ -134,7 +136,11 @@ fun BindData(
                     RoundedCornerShape(5.dp),
                 ),
             onClick = {
-                /*View Details*/
+                navController.navigate(
+                    route = Screen.Orders.ordersProduct(
+                        data.convertGsonToString()
+                    )
+                )
             },
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp),
             colors = ButtonDefaults.buttonColors(

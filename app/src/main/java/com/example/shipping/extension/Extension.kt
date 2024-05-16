@@ -10,8 +10,10 @@ import androidx.navigation.navigation
 import com.example.shipping.data.preferences.Preference
 import com.example.shipping.domain.utils.AUTHENTICATION_ROUTE
 import com.example.shipping.domain.utils.DETAILS_PRODUCT
+import com.example.shipping.domain.utils.ORDERS_PRODUCT
 import com.example.shipping.domain.utils.Screen
 import com.example.shipping.presentation.comeinscreen.ComeInScreen
+import com.example.shipping.presentation.detailsorderscreen.DetailsOrderScreen
 import com.example.shipping.presentation.detailspoductscreen.DetailsProductScreen
 import com.example.shipping.presentation.splashscreen.SplashScreen
 import com.example.shipping.ui.theme.selectEndButton
@@ -46,7 +48,7 @@ fun NavGraphBuilder.authNavGraph(
     }
 }
 
-fun NavGraphBuilder.detailsNavGraph(
+fun NavGraphBuilder.detailsProductNavGraph(
     navController: NavHostController
 ) {
     navigation(
@@ -65,6 +67,32 @@ fun NavGraphBuilder.detailsNavGraph(
                 ?.let {
                     DetailsProductScreen(
                         product = it.convertStringToGson(),
+                        navController = navController
+                    )
+                }
+        }
+    }
+}
+
+fun NavGraphBuilder.detailsOrderNavGraph(
+    navController: NavHostController
+) {
+    navigation(
+        startDestination = Screen.Splash.route,
+        route = ORDERS_PRODUCT
+    ) {
+        composable(
+            route = Screen.Orders.route,
+            arguments = listOf(
+                navArgument(name = ORDERS_PRODUCT) {
+                    type = NavType.StringType
+                }
+            )
+        ) { index ->
+            index.arguments?.getString(ORDERS_PRODUCT)
+                ?.let {
+                    DetailsOrderScreen(
+                        order = it.convertStringToGson(),
                         navController = navController
                     )
                 }

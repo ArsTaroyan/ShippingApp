@@ -154,8 +154,6 @@ fun BindData(
             )
 
             Text(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp),
                 text = "$count",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 fontSize = 15.sp

@@ -6,7 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.shipping.domain.utils.BottomNavigationScreen
 import com.example.shipping.domain.utils.HOME_ROUTE
-import com.example.shipping.extension.detailsNavGraph
+import com.example.shipping.extension.detailsOrderNavGraph
+import com.example.shipping.extension.detailsProductNavGraph
 import com.example.shipping.presentation.menuscreen.MenuScreen
 import com.example.shipping.presentation.ordersscreen.OrdersScreen
 import com.example.shipping.presentation.shippingscreen.ShippingScreen
@@ -38,6 +39,7 @@ fun HomeNavGraph(
             ShippingScreen()
         }
 
-        detailsNavGraph(navController)
+        detailsProductNavGraph(navController)
+        detailsOrderNavGraph(navController)
     }
 }

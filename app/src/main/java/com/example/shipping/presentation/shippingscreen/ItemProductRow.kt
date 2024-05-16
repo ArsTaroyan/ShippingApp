@@ -67,80 +67,84 @@ fun BindData(
 
     count = data.product_count
 
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxHeight(),
-        contentAlignment = Alignment.Center
     ) {
-        GlideImage(
-            model = data.product_img,
-            contentDescription = "loadImage",
-            contentScale = ContentScale.Crop,
+        Box(
             modifier = Modifier
-                .size(width = 100.dp, height = 110.dp)
+                .fillMaxHeight(),
+            contentAlignment = Alignment.Center
         ) {
-            it.error(R.drawable.ic_launcher_foreground)
-                .placeholder(R.drawable.ic_launcher_background)
-                .load(data.product_img)
+            GlideImage(
+                model = data.product_img,
+                contentDescription = "loadImage",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(width = 100.dp, height = 110.dp)
+            ) {
+                it.error(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .load(data.product_img)
+            }
         }
-    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxHeight(),
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-
-        Text(
-            text = data.product_name,
-            fontSize = 12.sp,
-            maxLines = 2,
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            overflow = TextOverflow.Ellipsis,
+        Column(
             modifier = Modifier
-                .fillMaxWidth(0.5f)
-        )
-
-        Text(
-            text = "${data.product_price * count}$",
-            fontSize = 12.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(0.6f)
-                .border(width = 1.dp, Color.Black, shape = RoundedCornerShape(5.dp))
-                .padding(12.dp)
-                .background(color = Color.Transparent),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .fillMaxHeight()
+                .padding(start = 10.dp),
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_remove),
-                contentDescription = null,
-                modifier = Modifier
-                    .clickable {
-                        if (count > 1) {
-                            viewModel.updateProduct(product = data.copy(product_count = --count))
-                        }
-                    }
-            )
+
             Text(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp),
-                text = "$count",
+                text = data.product_name,
+                fontSize = 12.sp,
+                maxLines = 2,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                fontSize = 15.sp
-            )
-            Icon(
-                painter = painterResource(R.drawable.ic_add),
-                contentDescription = null,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .clickable {
-                        viewModel.updateProduct(product = data.copy(product_count = ++count))
-                    }
+                    .fillMaxWidth(0.5f)
             )
+
+            Text(
+                text = "${data.product_price * count}$",
+                fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(0.6f)
+                    .border(width = 1.dp, Color.Black, shape = RoundedCornerShape(5.dp))
+                    .padding(12.dp)
+                    .background(color = Color.Transparent),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_remove),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clickable {
+                            if (count > 1) {
+                                viewModel.updateProduct(product = data.copy(product_count = --count))
+                            }
+                        }
+                )
+                Text(
+                    text = "$count",
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    fontSize = 15.sp
+                )
+                Icon(
+                    painter = painterResource(R.drawable.ic_add),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.updateProduct(product = data.copy(product_count = ++count))
+                        }
+                )
+            }
         }
     }
 
