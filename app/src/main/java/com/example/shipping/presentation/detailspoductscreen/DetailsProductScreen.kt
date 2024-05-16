@@ -1,4 +1,4 @@
-package com.example.shipping.presentation.detailsscreen
+package com.example.shipping.presentation.detailspoductscreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -51,7 +51,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun DetailsScreen(
+fun DetailsProductScreen(
     product: Product,
     navController: NavHostController
 ) {

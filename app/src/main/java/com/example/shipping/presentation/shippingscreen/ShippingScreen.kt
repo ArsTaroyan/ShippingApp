@@ -71,7 +71,7 @@ fun InitLazyColumn(
                 .fillMaxSize()
         ) {
             itemsIndexed(items) { _, item ->
-                ItemProductColumn(item = item)
+                ItemProductRow(item = item)
             }
 
         }
@@ -100,7 +100,7 @@ fun InitLazyColumn(
                         containerColor = Color.Transparent
                     )
                 ) {
-                    Text(text = "Gone", color = Color.White, fontSize = 15.sp)
+                    Text(text = "Gone", color = Color.White, fontSize = 12.sp)
                 }
                 Button(
                     modifier = Modifier
@@ -117,7 +117,7 @@ fun InitLazyColumn(
                         containerColor = Color.Transparent
                     )
                 ) {
-                    Text(text = "Shipping", color = Color.White, fontSize = 15.sp)
+                    Text(text = "Shipping", color = Color.White, fontSize = 12.sp)
                 }
                 Button(
                     modifier = Modifier
@@ -133,7 +133,7 @@ fun InitLazyColumn(
                         containerColor = Color.Transparent
                     )
                 ) {
-                    Text(text = "RemoveAll", color = Color.White, fontSize = 15.sp)
+                    Text(text = "RemoveAll", color = Color.White, fontSize = 12.sp)
                 }
             }
         }
@@ -161,7 +161,7 @@ fun InitLazyColumn(
                         containerColor = Color.Transparent
                     )
                 ) {
-                    Text(text = "Visible", color = Color.White, fontSize = 15.sp)
+                    Text(text = "Visible", color = Color.White, fontSize = 12.sp)
                 }
             }
         }

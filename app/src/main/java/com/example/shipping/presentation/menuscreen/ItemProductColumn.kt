@@ -51,7 +51,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
-fun ItemProductRow(
+fun ItemProductColumn(
     navController: NavHostController,
     item: Product
 ) {

@@ -41,14 +41,14 @@ import com.example.shipping.R
 import com.example.shipping.domain.module.Product
 
 @Composable
-fun ItemProductColumn(item: Product) {
+fun ItemProductRow(item: Product) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 15.dp, bottom = 5.dp, start = 15.dp, end = 15.dp)
             .height(150.dp)
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
-            .padding(horizontal = 10.dp),
+            .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         BindData(item)
@@ -151,7 +151,7 @@ fun BindData(
     ) {
         Icon(
             modifier = Modifier
-                .padding(top = 10.dp, start = 10.dp)
+                .padding(start = 10.dp)
                 .fillMaxSize(),
             imageVector = Icons.Default.Clear,
             contentDescription = null,

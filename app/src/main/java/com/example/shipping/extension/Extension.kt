@@ -12,7 +12,7 @@ import com.example.shipping.domain.utils.AUTHENTICATION_ROUTE
 import com.example.shipping.domain.utils.DETAILS_PRODUCT
 import com.example.shipping.domain.utils.Screen
 import com.example.shipping.presentation.comeinscreen.ComeInScreen
-import com.example.shipping.presentation.detailsscreen.DetailsScreen
+import com.example.shipping.presentation.detailspoductscreen.DetailsProductScreen
 import com.example.shipping.presentation.splashscreen.SplashScreen
 import com.example.shipping.ui.theme.selectEndButton
 import com.example.shipping.ui.theme.selectStartButton
@@ -63,7 +63,7 @@ fun NavGraphBuilder.detailsNavGraph(
         ) { index ->
             index.arguments?.getString(DETAILS_PRODUCT)
                 ?.let {
-                    DetailsScreen(
+                    DetailsProductScreen(
                         product = it.convertStringToGson(),
                         navController = navController
                     )

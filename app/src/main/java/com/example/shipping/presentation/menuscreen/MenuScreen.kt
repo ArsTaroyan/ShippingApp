@@ -180,7 +180,7 @@ fun InitLazyRow(
                 )
             )
         ) { _, item ->
-            ItemProductRow(navController = navController, item = item)
+            ItemProductColumn(navController = navController, item = item)
         }
     }
 }
