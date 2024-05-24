@@ -29,6 +29,32 @@ ShippingApp is an Android application designed to facilitate the management of s
 - **Preferences DataStore**:
   - `implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")`
 
+## Installation
+
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/ArsTaroyan/ShippingApp.git
+    cd Daily
+    ```
+
+2. **Open the project**
+    Open the project in [Android Studio](https://developer.android.com/studio).
+
+3. **Sync Gradle**
+    The project uses Gradle to manage dependencies. Sync Gradle to download all required dependencies.
+
+4. **Run the application**
+    Connect your Android device or use an emulator to run the application.
+
+## Project Structure
+
+The project follows MVVM Architecture principles, ensuring modularity and testability of the code. The main modules include:
+
+- **data**: Contains data sources (Room database, SharedPreferences).
+- **domain**: Contains business logic (models).
+- **presentation**: Contains the user interface (Activity, ViewModel).
+
+
 ## Project Description
 
 ShippingApp was developed to assist supermarkets in managing their inventory and replenishing supplies without the need for manual intervention. The app simplifies the supermarket's workflow by enabling staff to easily replenish products. It also records orders from previous shipments for reference.
